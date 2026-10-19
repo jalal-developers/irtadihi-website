@@ -35,3 +35,14 @@ out/
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+# Google Antigravity local agent workspace state
+.antigravity/
+
+# Offline SVG downloader tool (preventing it from deploying to production)
+**/irtadihi_svg_logo_kit*.html
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+
