@@ -13,6 +13,8 @@ export function AuthModal() {
 
   if (!state.authModalOpen) return null;
 
+  const isDark = state.theme === 'dark';
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes('@')) {
@@ -41,16 +43,17 @@ export function AuthModal() {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '24px 16px',
-        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+        backgroundColor: isDark ? 'rgba(0, 0, 0, 0.82)' : 'rgba(0, 0, 0, 0.65)',
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
+        overflowY: 'auto',
       }}
       onClick={closeAuthModal}
       role="dialog"
       aria-modal="true"
       aria-labelledby="auth-modal-title"
     >
-      {/* Modal Container: Enlarged box size, generous padding and explicit styling */}
+      {/* Modal Container: Theme-aware luxury card */}
       <div
         className="auth-modal-card"
         style={{
@@ -59,10 +62,14 @@ export function AuthModal() {
           maxWidth: '540px',
           maxHeight: 'calc(100vh - 48px)',
           overflowY: 'auto',
-          backgroundColor: '#FFFFFF',
+          backgroundColor: isDark ? '#121212' : '#FFFFFF',
+          color: isDark ? '#FBFAF6' : '#1A1917',
+          border: isDark ? '1px solid #262522' : '1px solid #E6E1D6',
           borderRadius: '18px',
           padding: '44px 44px 38px 44px',
-          boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
+          boxShadow: isDark
+            ? '0 25px 60px -15px rgba(0, 0, 0, 0.85)'
+            : '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
           margin: 'auto',
           zIndex: 100000,
         }}
@@ -83,7 +90,7 @@ export function AuthModal() {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: '50%',
-            color: '#9CA3AF',
+            color: isDark ? '#71717A' : '#9CA3AF',
             backgroundColor: 'transparent',
             border: 'none',
             cursor: 'pointer',
@@ -112,7 +119,7 @@ export function AuthModal() {
               fontSize: '10px',
               fontWeight: 600,
               letterSpacing: '0.26em',
-              color: '#9CA3AF',
+              color: isDark ? '#9E8C63' : '#9CA3AF',
               textTransform: 'uppercase',
             }}
           >
@@ -125,11 +132,12 @@ export function AuthModal() {
           <div style={{ textAlign: 'center', padding: '16px 0' }}>
             <h3
               id="auth-modal-title"
+              className="auth-modal-title"
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontSize: '30px',
                 fontWeight: 400,
-                color: '#111827',
+                color: isDark ? '#FBFAF6' : '#111827',
                 marginBottom: '8px',
                 lineHeight: 1.2,
               }}
@@ -137,10 +145,11 @@ export function AuthModal() {
               Welcome, {state.user.name || state.user.email}
             </h3>
             <p
+              className="auth-modal-subtitle"
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '14px',
-                color: '#6B7280',
+                color: isDark ? '#A39E93' : '#6B7280',
                 marginBottom: '24px',
                 lineHeight: 1.5,
                 maxWidth: '380px',
@@ -152,13 +161,14 @@ export function AuthModal() {
             </p>
 
             <div
+              className="auth-logged-card"
               style={{
                 padding: '14px',
-                backgroundColor: '#F9FAFB',
-                border: '1px solid #E5E7EB',
+                backgroundColor: isDark ? '#1A1A1A' : '#F9FAFB',
+                border: isDark ? '1px solid #262522' : '1px solid #E5E7EB',
                 marginBottom: '24px',
                 fontSize: '12px',
-                color: '#1F2937',
+                color: isDark ? '#FBFAF6' : '#1F2937',
                 fontFamily: 'monospace',
                 letterSpacing: '0.08em',
                 borderRadius: '8px',
@@ -174,9 +184,9 @@ export function AuthModal() {
                 style={{
                   width: '100%',
                   height: '50px',
-                  backgroundColor: '#2D2A26',
-                  color: '#FFFFFF',
-                  border: '1px solid #2D2A26',
+                  backgroundColor: isDark ? '#FBFAF6' : '#2D2A26',
+                  color: isDark ? '#121212' : '#FFFFFF',
+                  border: isDark ? '1px solid #FBFAF6' : '1px solid #2D2A26',
                   borderRadius: '8px',
                   fontSize: '11.5px',
                   fontWeight: 700,
@@ -192,7 +202,7 @@ export function AuthModal() {
                 type="button"
                 style={{
                   fontSize: '12px',
-                  color: '#9CA3AF',
+                  color: isDark ? '#71717A' : '#9CA3AF',
                   textDecoration: 'underline',
                   background: 'none',
                   border: 'none',
@@ -211,11 +221,12 @@ export function AuthModal() {
             {/* Main Headline */}
             <h3
               id="auth-modal-title"
+              className="auth-modal-title"
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontSize: '32px',
                 fontWeight: 400,
-                color: '#111827',
+                color: isDark ? '#FBFAF6' : '#111827',
                 textAlign: 'center',
                 marginTop: '4px',
                 marginBottom: '8px',
@@ -229,10 +240,11 @@ export function AuthModal() {
 
             {/* Sub-headline */}
             <p
+              className="auth-modal-subtitle"
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '13px',
-                color: '#6B7280',
+                color: isDark ? '#A39E93' : '#6B7280',
                 textAlign: 'center',
                 marginBottom: '26px',
                 marginTop: '0px',
@@ -255,11 +267,12 @@ export function AuthModal() {
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
                   marginBottom: '26px',
-                  borderBottom: '1px solid #E5E7EB',
+                  borderBottom: isDark ? '1px solid #262522' : '1px solid #E5E7EB',
                 }}
               >
                 <button
                   type="button"
+                  className={`auth-tab-btn ${isReturningUser ? 'active' : 'inactive'}`}
                   style={{
                     paddingBottom: '12px',
                     fontSize: '11px',
@@ -268,8 +281,12 @@ export function AuthModal() {
                     letterSpacing: '0.12em',
                     textAlign: 'center',
                     cursor: 'pointer',
-                    color: isReturningUser ? '#111827' : '#9CA3AF',
-                    borderBottom: isReturningUser ? '2px solid #111827' : '2px solid transparent',
+                    color: isReturningUser
+                      ? (isDark ? '#FBFAF6' : '#111827')
+                      : (isDark ? '#71717A' : '#9CA3AF'),
+                    borderBottom: isReturningUser
+                      ? (isDark ? '2px solid #9E8C63' : '2px solid #111827')
+                      : '2px solid transparent',
                     background: 'none',
                     borderTop: 'none',
                     borderLeft: 'none',
@@ -285,6 +302,7 @@ export function AuthModal() {
                 </button>
                 <button
                   type="button"
+                  className={`auth-tab-btn ${!isReturningUser ? 'active' : 'inactive'}`}
                   style={{
                     paddingBottom: '12px',
                     fontSize: '11px',
@@ -293,8 +311,12 @@ export function AuthModal() {
                     letterSpacing: '0.12em',
                     textAlign: 'center',
                     cursor: 'pointer',
-                    color: !isReturningUser ? '#111827' : '#9CA3AF',
-                    borderBottom: !isReturningUser ? '2px solid #111827' : '2px solid transparent',
+                    color: !isReturningUser
+                      ? (isDark ? '#FBFAF6' : '#111827')
+                      : (isDark ? '#71717A' : '#9CA3AF'),
+                    borderBottom: !isReturningUser
+                      ? (isDark ? '2px solid #9E8C63' : '2px solid #111827')
+                      : '2px solid transparent',
                     background: 'none',
                     borderTop: 'none',
                     borderLeft: 'none',
@@ -315,9 +337,9 @@ export function AuthModal() {
                   style={{
                     marginBottom: '18px',
                     padding: '12px 14px',
-                    backgroundColor: '#FEF2F2',
-                    border: '1px solid #FECACA',
-                    color: '#DC2626',
+                    backgroundColor: isDark ? 'rgba(220, 38, 38, 0.15)' : '#FEF2F2',
+                    border: isDark ? '1px solid rgba(220, 38, 38, 0.4)' : '1px solid #FECACA',
+                    color: isDark ? '#F87171' : '#DC2626',
                     fontSize: '12px',
                     borderRadius: '8px',
                     textAlign: 'left',
@@ -347,7 +369,7 @@ export function AuthModal() {
                         fontWeight: 600,
                         textTransform: 'uppercase',
                         letterSpacing: '0.12em',
-                        color: '#6B7280',
+                        color: isDark ? '#A39E93' : '#6B7280',
                         marginBottom: '8px',
                         paddingLeft: '2px',
                         textAlign: 'left',
@@ -366,11 +388,11 @@ export function AuthModal() {
                         width: '100%',
                         height: '48px',
                         padding: '0 16px',
-                        backgroundColor: '#FFFFFF',
-                        border: '1px solid #D6D3CD',
+                        backgroundColor: isDark ? '#1A1A1A' : '#FFFFFF',
+                        border: isDark ? '1px solid #2E2D2A' : '1px solid #D6D3CD',
                         borderRadius: '8px',
                         fontSize: '14px',
-                        color: '#1A1917',
+                        color: isDark ? '#FBFAF6' : '#1A1917',
                         boxSizing: 'border-box',
                         outline: 'none',
                       }}
@@ -396,7 +418,7 @@ export function AuthModal() {
                       fontWeight: 600,
                       textTransform: 'uppercase',
                       letterSpacing: '0.12em',
-                      color: '#6B7280',
+                      color: isDark ? '#A39E93' : '#6B7280',
                       marginBottom: '8px',
                       paddingLeft: '2px',
                       textAlign: 'left',
@@ -416,11 +438,11 @@ export function AuthModal() {
                       width: '100%',
                       height: '48px',
                       padding: '0 16px',
-                      backgroundColor: '#FFFFFF',
-                      border: '1px solid #D6D3CD',
+                      backgroundColor: isDark ? '#1A1A1A' : '#FFFFFF',
+                      border: isDark ? '1px solid #2E2D2A' : '1px solid #D6D3CD',
                       borderRadius: '8px',
                       fontSize: '14px',
-                      color: '#1A1917',
+                      color: isDark ? '#FBFAF6' : '#1A1917',
                       boxSizing: 'border-box',
                       outline: 'none',
                     }}
@@ -445,7 +467,7 @@ export function AuthModal() {
                       fontWeight: 600,
                       textTransform: 'uppercase',
                       letterSpacing: '0.12em',
-                      color: '#6B7280',
+                      color: isDark ? '#A39E93' : '#6B7280',
                       marginBottom: '8px',
                       paddingLeft: '2px',
                       textAlign: 'left',
@@ -465,11 +487,11 @@ export function AuthModal() {
                       width: '100%',
                       height: '48px',
                       padding: '0 16px',
-                      backgroundColor: '#FFFFFF',
-                      border: '1px solid #D6D3CD',
+                      backgroundColor: isDark ? '#1A1A1A' : '#FFFFFF',
+                      border: isDark ? '1px solid #2E2D2A' : '1px solid #D6D3CD',
                       borderRadius: '8px',
                       fontSize: '14px',
-                      color: '#1A1917',
+                      color: isDark ? '#FBFAF6' : '#1A1917',
                       letterSpacing: '0.2em',
                       boxSizing: 'border-box',
                       outline: 'none',
@@ -492,9 +514,9 @@ export function AuthModal() {
                     style={{
                       width: '100%',
                       height: '50px',
-                      backgroundColor: '#2D2A26',
-                      color: '#FFFFFF',
-                      border: '1px solid #2D2A26',
+                      backgroundColor: isDark ? '#FBFAF6' : '#2D2A26',
+                      color: isDark ? '#121212' : '#FFFFFF',
+                      border: isDark ? '1px solid #FBFAF6' : '1px solid #2D2A26',
                       borderRadius: '8px',
                       fontSize: '11.5px',
                       fontWeight: 700,
@@ -520,7 +542,7 @@ export function AuthModal() {
                   style={{
                     fontSize: '11.5px',
                     textAlign: 'center',
-                    color: '#9CA3AF',
+                    color: isDark ? '#71717A' : '#9CA3AF',
                     fontWeight: 400,
                     lineHeight: '1.6',
                     marginTop: '12px',
