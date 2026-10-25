@@ -900,10 +900,11 @@ button {
   color: var(--text-primary);
 }
 .product-price {
-  font-size: 0.875rem;
+  font-size: 1.125rem;
+  font-weight: 700;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 .product-fabric {
   font-size: 0.8125rem;
@@ -1831,4 +1832,151 @@ button {
   .pdp-details-col { padding: 24px 20px; }
   .size-swatches-grid { gap: 8px; }
   .lookbook-section { padding: var(--space-6) var(--container-pad); }
+}
+
+/* ===== Multi-Directional Custom Scroll Animations ===== */
+.scroll-reveal-container {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal-container {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ===== Exclusive Privilege Auth Modal Styles ===== */
+.auth-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px 16px !important;
+  background-color: rgba(0, 0, 0, 0.65) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  overflow-y: auto !important;
+}
+
+.auth-modal-card {
+  width: 100% !important;
+  max-width: 540px !important;
+  max-height: calc(100vh - 48px) !important;
+  overflow-y: auto !important;
+  background-color: #FFFFFF !important;
+  color: #1A1917 !important;
+  border-radius: 18px !important;
+  padding: 44px 44px 40px 44px !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35) !important;
+  position: relative !important;
+  margin: auto !important;
+  z-index: 100000 !important;
+}
+
+@media (max-width: 640px) {
+  .auth-modal-card {
+    padding: 32px 24px 28px 24px !important;
+    max-width: 95vw !important;
+  }
+}
+
+.auth-form-wrapper {
+  padding: 0 4px !important;
+  width: 100% !important;
+}
+
+.auth-field-group {
+  margin-top: 0 !important;
+  margin-bottom: 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+}
+
+.auth-field-label {
+  display: block !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  color: #6B7280 !important;
+  margin-bottom: 8px !important;
+  padding-left: 2px !important;
+  text-align: left !important;
+}
+
+.auth-input-field {
+  width: 100% !important;
+  height: 48px !important;
+  padding: 0 16px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #D6D3CD !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  color: #1A1917 !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.auth-input-field:focus {
+  border-color: #2D2A26 !important;
+  box-shadow: 0 0 0 1px #2D2A26 !important;
+}
+
+.auth-input-field::placeholder {
+  color: #9C988F !important;
+  font-size: 13px !important;
+}
+
+.auth-btn-container {
+  margin-top: 14px !important;
+  margin-bottom: 20px !important;
+  width: 100% !important;
+}
+
+.auth-submit-btn {
+  width: 100% !important;
+  height: 50px !important;
+  background-color: #2D2A26 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #2D2A26 !important;
+  border-radius: 8px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.2s ease, transform 0.1s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.auth-submit-btn:hover {
+  background-color: #0A0A0A !important;
+  border-color: #0A0A0A !important;
+  color: #FFFFFF !important;
+}
+
+.auth-submit-btn:active {
+  transform: scale(0.99) !important;
+}
+
+.auth-disclaimer-text {
+  font-size: 11.5px !important;
+  text-align: center !important;
+  color: #9CA3AF !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  margin-top: 12px !important;
+  margin-bottom: 8px !important;
+  padding: 0 8px !important;
 }

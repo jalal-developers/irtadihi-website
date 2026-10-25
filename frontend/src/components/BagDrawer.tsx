@@ -10,8 +10,11 @@ export function BagDrawer() {
     updateQty,
     removeFromBag,
     bagTotal,
+    discountAmount,
+    finalTotal,
     bagCount,
     bagFreeShippingProgress,
+    openAuthModal,
     showToast,
   } = useStore();
 
@@ -65,7 +68,7 @@ export function BagDrawer() {
         <div className="shipping-bar-wrap">
           <div className="shipping-text-row">
             <span>
-              {bagTotal >= 300 ? (
+              {bagTotal >= 30000 ? (
                 <>
                   <strong className="text-[var(--accent-primary)]">Unlocked:</strong>{' '}
                   Complimentary Express Atelier Delivery
@@ -74,7 +77,7 @@ export function BagDrawer() {
                 <>
                   Add{' '}
                   <strong className="price-num font-semibold">
-                    ${300 - bagTotal}
+                    PKR {(30000 - bagTotal).toLocaleString()}
                   </strong>{' '}
                   for Complimentary Express Atelier Delivery
                 </>
@@ -175,8 +178,8 @@ export function BagDrawer() {
                         +
                       </button>
                     </div>
-                    <span className="bag-item-subtotal price-num">
-                      ${item.product.price * item.quantity}
+                    <span className="bag-item-subtotal price-num font-semibold">
+                      PKR {(item.product.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -189,8 +192,33 @@ export function BagDrawer() {
         {state.bagItems.length > 0 && (
           <div className="bag-footer">
             <div className="bag-subtotal-row">
-              <span className="subtotal-label">Estimated Subtotal</span>
-              <strong className="subtotal-num price-num">${bagTotal}</strong>
+              <span className="subtotal-label">Subtotal</span>
+              <span className="subtotal-num price-num font-semibold">PKR {bagTotal.toLocaleString()}</span>
+            </div>
+
+            {state.discountApplied ? (
+              <div className="bag-subtotal-row text-xs text-[var(--accent-primary)] font-medium">
+                <span>10% Welcome Privilege (ATELIER10)</span>
+                <span className="price-num font-semibold">-PKR {discountAmount.toLocaleString()}</span>
+              </div>
+            ) : (
+              <div className="py-1">
+                <button
+                  type="button"
+                  onClick={() => openAuthModal()}
+                  className="text-xs text-[var(--accent-primary)] hover:underline flex items-center gap-1"
+                >
+                  <span>Log in to apply 10% Welcome Privilege</span>
+                  <span>→</span>
+                </button>
+              </div>
+            )}
+
+            <div className="bag-subtotal-row pt-2 border-t border-[var(--border-hairline)]">
+              <span className="subtotal-label text-sm font-semibold">Estimated Total</span>
+              <strong className="subtotal-num price-num text-base font-bold text-[var(--text-primary)]">
+                PKR {finalTotal.toLocaleString()}
+              </strong>
             </div>
 
             <p className="bag-note">

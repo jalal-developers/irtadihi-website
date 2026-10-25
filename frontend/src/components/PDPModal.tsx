@@ -248,8 +248,8 @@ export function PDPModal() {
           </h2>
 
           {/* Price */}
-          <div className="price-num text-xl sm:text-2xl text-[var(--text-primary)] mb-4">
-            ${product.price}
+          <div className="price-num text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-4">
+            PKR {product.price.toLocaleString()}
           </div>
 
           {/* Description */}

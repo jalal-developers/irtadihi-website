@@ -11,6 +11,11 @@ import React, {
 import type { BagItem, Product, ProductSize, ColorSwatch, Theme } from '@/lib/data';
 
 // ===== State =====
+interface User {
+  email: string;
+  name?: string;
+}
+
 interface StoreState {
   theme: Theme;
   bagOpen: boolean;
@@ -18,6 +23,9 @@ interface StoreState {
   pdpProduct: Product | null;
   pdpOpen: boolean;
   mobileNavOpen: boolean;
+  authModalOpen: boolean;
+  user: User | null;
+  discountApplied: boolean;
   toast: string | null;
 }
 
@@ -33,6 +41,11 @@ type Action =
   | { type: 'CLOSE_PDP' }
   | { type: 'OPEN_MOBILE_NAV' }
   | { type: 'CLOSE_MOBILE_NAV' }
+  | { type: 'OPEN_AUTH_MODAL' }
+  | { type: 'CLOSE_AUTH_MODAL' }
+  | { type: 'LOGIN'; user: User }
+  | { type: 'LOGOUT' }
+  | { type: 'APPLY_DISCOUNT' }
   | { type: 'SHOW_TOAST'; message: string }
   | { type: 'HIDE_TOAST' };
 
@@ -96,6 +109,16 @@ function reducer(state: StoreState, action: Action): StoreState {
       return { ...state, mobileNavOpen: true };
     case 'CLOSE_MOBILE_NAV':
       return { ...state, mobileNavOpen: false };
+    case 'OPEN_AUTH_MODAL':
+      return { ...state, authModalOpen: true };
+    case 'CLOSE_AUTH_MODAL':
+      return { ...state, authModalOpen: false };
+    case 'LOGIN':
+      return { ...state, user: action.user, discountApplied: true };
+    case 'LOGOUT':
+      return { ...state, user: null };
+    case 'APPLY_DISCOUNT':
+      return { ...state, discountApplied: true };
     case 'SHOW_TOAST':
       return { ...state, toast: action.message };
     case 'HIDE_TOAST':
@@ -118,15 +141,22 @@ interface StoreContextValue {
   closePdp: () => void;
   openMobileNav: () => void;
   closeMobileNav: () => void;
+  openAuthModal: () => void;
+  closeAuthModal: () => void;
+  loginUser: (email: string, name?: string) => void;
+  logoutUser: () => void;
+  applyDiscount: () => void;
   showToast: (message: string) => void;
   bagTotal: number;
+  discountAmount: number;
+  finalTotal: number;
   bagCount: number;
   bagFreeShippingProgress: number;
 }
 
 const StoreContext = createContext<StoreContextValue | null>(null);
 
-const FREE_SHIPPING_THRESHOLD = 300;
+const FREE_SHIPPING_THRESHOLD = 30000;
 
 const INITIAL_STATE: StoreState = {
   theme: 'light',
@@ -135,17 +165,29 @@ const INITIAL_STATE: StoreState = {
   pdpProduct: null,
   pdpOpen: false,
   mobileNavOpen: false,
+  authModalOpen: false,
+  user: null,
+  discountApplied: false,
   toast: null,
 };
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-  // Hydrate theme from localStorage on mount
+  // Hydrate theme and auth state from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('irtadihi-theme') as Theme | null;
-    if (saved && (saved === 'light' || saved === 'dark')) {
-      dispatch({ type: 'SET_THEME', theme: saved });
+    const savedTheme = localStorage.getItem('irtadihi-theme') as Theme | null;
+    if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+      dispatch({ type: 'SET_THEME', theme: savedTheme });
+    }
+    const savedUser = localStorage.getItem('irtadihi-user');
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        dispatch({ type: 'LOGIN', user: parsed });
+      } catch {
+        // ignore
+      }
     }
   }, []);
 
@@ -157,12 +199,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   // Lock body scroll when overlays open
   useEffect(() => {
-    const locked = state.bagOpen || state.pdpOpen || state.mobileNavOpen;
+    const locked = state.bagOpen || state.pdpOpen || state.mobileNavOpen || state.authModalOpen;
     document.body.style.overflow = locked ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [state.bagOpen, state.pdpOpen, state.mobileNavOpen]);
+  }, [state.bagOpen, state.pdpOpen, state.mobileNavOpen, state.authModalOpen]);
 
   // Auto-dismiss toast
   useEffect(() => {
@@ -209,6 +251,30 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const openMobileNav = useCallback(() => dispatch({ type: 'OPEN_MOBILE_NAV' }), []);
   const closeMobileNav = useCallback(() => dispatch({ type: 'CLOSE_MOBILE_NAV' }), []);
 
+  const openAuthModal = useCallback(() => dispatch({ type: 'OPEN_AUTH_MODAL' }), []);
+  const closeAuthModal = useCallback(() => dispatch({ type: 'CLOSE_AUTH_MODAL' }), []);
+
+  const loginUser = useCallback((email: string, name?: string) => {
+    const user = { email, name };
+    localStorage.setItem('irtadihi-user', JSON.stringify(user));
+    dispatch({ type: 'LOGIN', user });
+    dispatch({ type: 'CLOSE_AUTH_MODAL' });
+    dispatch({
+      type: 'SHOW_TOAST',
+      message: 'Welcome! 10% privilege has been applied to your bag.',
+    });
+  }, []);
+
+  const logoutUser = useCallback(() => {
+    localStorage.removeItem('irtadihi-user');
+    dispatch({ type: 'LOGOUT' });
+    dispatch({ type: 'SHOW_TOAST', message: 'You have been signed out.' });
+  }, []);
+
+  const applyDiscount = useCallback(() => {
+    dispatch({ type: 'APPLY_DISCOUNT' });
+  }, []);
+
   const showToast = useCallback((message: string) => {
     dispatch({ type: 'SHOW_TOAST', message });
   }, []);
@@ -217,6 +283,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     (sum, i) => sum + i.product.price * i.quantity,
     0
   );
+  const discountAmount = state.discountApplied ? Math.round(bagTotal * 0.1) : 0;
+  const finalTotal = bagTotal - discountAmount;
   const bagCount = state.bagItems.reduce((sum, i) => sum + i.quantity, 0);
   const bagFreeShippingProgress = Math.min(
     (bagTotal / FREE_SHIPPING_THRESHOLD) * 100,
@@ -237,8 +305,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         closePdp,
         openMobileNav,
         closeMobileNav,
+        openAuthModal,
+        closeAuthModal,
+        loginUser,
+        logoutUser,
+        applyDiscount,
         showToast,
         bagTotal,
+        discountAmount,
+        finalTotal,
         bagCount,
         bagFreeShippingProgress,
       }}

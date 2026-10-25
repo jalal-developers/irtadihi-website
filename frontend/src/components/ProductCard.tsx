@@ -58,11 +58,6 @@ export function ProductCard({ product }: ProductCardProps) {
     setViewAngle((prev) => (prev === 'front' ? 'back' : 'front'));
   };
 
-  const handleColorSelect = (e: React.MouseEvent, color: ColorSwatch) => {
-    e.stopPropagation();
-    setActiveColor(color);
-  };
-
   const cardBg = isDark ? '#141312' : '#F4F1EA';
   const cardCircle = isDark ? '#1A1917' : '#FBFAF6';
   const garmentStroke =
@@ -86,7 +81,7 @@ export function ProductCard({ product }: ProductCardProps) {
           handleCardClick();
         }
       }}
-      aria-label={`${product.name}, $${product.price}. Click to view details.`}
+      aria-label={`${product.name}, PKR ${product.price.toLocaleString()}. Click to view details.`}
     >
       {/* Product Media Container */}
       <div className="product-media">
@@ -314,27 +309,11 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="product-meta">
         <div className="product-meta-top">
           <h3 className="product-title">{product.name}</h3>
-          <span className="product-price price-num">${product.price}</span>
+          <span className="product-price price-num text-lg font-bold tracking-tight">
+            PKR {product.price.toLocaleString()}
+          </span>
         </div>
         <p className="product-fabric">{product.fabric}</p>
-
-        {/* Color Swatch Dots */}
-        <div className="product-swatches" role="group" aria-label="Color options">
-          {product.colors.map((c) => {
-            const isSelected = activeColor.name === c.name;
-            return (
-              <button
-                key={c.name}
-                type="button"
-                className={`swatch-dot ${isSelected ? 'active' : ''}`}
-                style={{ backgroundColor: c.hex }}
-                onClick={(e) => handleColorSelect(e, c)}
-                title={c.name}
-                aria-label={c.name}
-              />
-            );
-          })}
-        </div>
       </div>
     </article>
   );

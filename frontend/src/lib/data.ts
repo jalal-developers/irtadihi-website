@@ -3,12 +3,16 @@
 export type Theme = 'light' | 'dark';
 
 export type ProductCategory =
-  | 'All Pieces'
+  | 'All'
   | 'Hoodies'
   | 'Sweatshirts'
   | 'Outerwear'
   | 'Silk & Drape'
   | 'Tailored Separates';
+
+export function formatPKR(amount: number): string {
+  return `PKR ${amount.toLocaleString()}`;
+}
 
 export type SortOption = 'Featured' | 'Price: Low to High' | 'Price: High to Low';
 
@@ -52,7 +56,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'hoodie-001',
     name: 'Umber Heavyweight Hoodie',
-    price: 285,
+    price: 28500,
     category: 'Hoodies',
     fabric: '380gsm Organic Cotton Fleece',
     badge: 'Capsule 01',
@@ -75,7 +79,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'hoodie-002',
     name: 'Alabaster Draped Hoodie',
-    price: 285,
+    price: 28500,
     category: 'Hoodies',
     fabric: '380gsm Organic Cotton Fleece',
     badge: 'Capsule 01',
@@ -97,7 +101,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'hoodie-003',
     name: 'Bronze Archive Hoodie',
-    price: 310,
+    price: 31000,
     category: 'Hoodies',
     fabric: '380gsm Organic Cotton Fleece',
     badge: 'Limited',
@@ -119,7 +123,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'sweatshirt-001',
     name: 'Architectural Crewneck',
-    price: 245,
+    price: 24500,
     category: 'Sweatshirts',
     fabric: '320gsm French Terry',
     badge: 'Capsule 01',
@@ -142,7 +146,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'sweatshirt-002',
     name: 'Alabaster Crewneck',
-    price: 245,
+    price: 24500,
     category: 'Sweatshirts',
     fabric: '320gsm French Terry',
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
@@ -163,7 +167,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'sweatshirt-003',
     name: 'Bronze Quarter-Zip',
-    price: 265,
+    price: 26500,
     category: 'Sweatshirts',
     fabric: '300gsm Loopback Fleece',
     badge: 'New',
@@ -186,7 +190,7 @@ export const PRODUCTS: Product[] = [
 
 // ===== Categories Config =====
 export const CATEGORIES: { label: ProductCategory; comingSoon: boolean }[] = [
-  { label: 'All Pieces', comingSoon: false },
+  { label: 'All', comingSoon: false },
   { label: 'Hoodies', comingSoon: false },
   { label: 'Sweatshirts', comingSoon: false },
   { label: 'Outerwear', comingSoon: true },

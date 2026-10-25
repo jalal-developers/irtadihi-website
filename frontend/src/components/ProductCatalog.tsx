@@ -5,6 +5,7 @@ import type { ProductCategory, SortOption } from '@/lib/data';
 import { PRODUCTS, CATEGORIES } from '@/lib/data';
 import { ProductCard } from '@/components/ProductCard';
 import { ComingSoonView } from '@/components/ComingSoonView';
+import { ScrollReveal, type RevealDirection } from '@/components/ScrollReveal';
 
 interface ProductCatalogProps {
   selectedCategory: ProductCategory;
@@ -59,16 +60,16 @@ export function ProductCatalog({
   return (
     <section id="collection" className="collection-section" aria-label="Curated Wardrobe">
       {/* Section Header */}
-      <div className="section-header-centered">
+      <ScrollReveal direction="top" duration={800} className="section-header-centered">
         <span className="eyebrow">Curated Wardrobe</span>
         <h2 className="heading-section">Architectural Essentials</h2>
         <p className="max-w-2xl mx-auto text-base text-[var(--text-secondary)]">
           Every garment is cut in limited batches from 380gsm GOTS organic cotton fleece and 320gsm French terry—tailored with dropped shoulders and weighted hemlines to hold form without stiffness.
         </p>
-      </div>
+      </ScrollReveal>
 
       {/* Filter & Sort Bar */}
-      <div className="filter-strip">
+      <ScrollReveal direction="bottom" duration={700} delay={100} className="filter-strip">
         {/* Category Tabs */}
         <div className="filter-tabs" role="tablist" aria-label="Product categories">
           {CATEGORIES.map((cat) => {
@@ -183,7 +184,7 @@ export function ProductCatalog({
             </div>
           )}
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Main Content: Either Product Grid or Coming Soon View */}
       {isComingSoonCategory ? (
@@ -193,9 +194,21 @@ export function ProductCatalog({
           className={`product-grid ${gridCols === 2 ? 'cols-2' : ''}`}
           id="productGrid"
         >
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {filteredProducts.map((product, idx) => {
+            const directions: RevealDirection[] = ['left', 'bottom', 'right'];
+            const dir = directions[idx % 3];
+            const delay = (idx % 3) * 120;
+            return (
+              <ScrollReveal
+                key={product.id}
+                direction={dir}
+                delay={delay}
+                duration={750}
+              >
+                <ProductCard product={product} />
+              </ScrollReveal>
+            );
+          })}
         </div>
       )}
     </section>

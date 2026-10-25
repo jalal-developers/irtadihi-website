@@ -136,11 +136,11 @@ export function Lookbook() {
             <ul className="lookbook-specs">
               <li>
                 <strong className="text-[var(--text-primary)]">Outerwear Layer:</strong>{' '}
-                Umber Heavyweight Hoodie ($285)
+                Umber Heavyweight Hoodie (PKR 28,500)
               </li>
               <li>
                 <strong className="text-[var(--text-primary)]">Base Layer:</strong>{' '}
-                Architectural Crewneck ($245)
+                Architectural Crewneck (PKR 24,500)
               </li>
               <li>
                 <strong className="text-[var(--text-primary)]">Fabric Synergy:</strong>{' '}
@@ -155,7 +155,7 @@ export function Lookbook() {
                   <h3 className="ensemble-name">The Layered Capsule Look</h3>
                   <p className="ensemble-sub">Umber Hoodie + Charcoal Crewneck (Size M)</p>
                 </div>
-                <div className="ensemble-price price-num">$530</div>
+                <div className="ensemble-price price-num font-bold">PKR 53,000</div>
               </div>
 
               <div className="ensemble-perk">
@@ -169,7 +169,7 @@ export function Lookbook() {
                 onClick={handleAddEnsemble}
               >
                 <span>Add Complete Ensemble to Bag</span>
-                <span className="price-num">($530)</span>
+                <span className="price-num">(PKR 53,000)</span>
               </button>
             </div>
           </div>

@@ -83,7 +83,7 @@ export function Header({ onSelectCategory }: HeaderProps) {
               <a
                 href="#collection"
                 className="nav-link"
-                onClick={(e) => handleNavClick(e, 'collection', 'All Pieces')}
+                onClick={(e) => handleNavClick(e, 'collection', 'All')}
               >
                 Collections
               </a>

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { StoreProvider } from '@/lib/store';
+import React, { useState, useEffect } from 'react';
+import { StoreProvider, useStore } from '@/lib/store';
 import type { ProductCategory } from '@/lib/data';
 import { Header } from '@/components/Header';
 import { MobileNav } from '@/components/MobileNav';
@@ -12,9 +12,28 @@ import { Footer } from '@/components/Footer';
 import { PDPModal } from '@/components/PDPModal';
 import { BagDrawer } from '@/components/BagDrawer';
 import { Toast } from '@/components/Toast';
+import { SideStickyDiscount } from '@/components/SideStickyDiscount';
+import { AuthModal } from '@/components/AuthModal';
 
 function AtelierFlagship() {
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('All Pieces');
+  const { openAuthModal, state } = useStore();
+  const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('All');
+
+  // Automatically pop up 10% off modal after 20 seconds on landing
+  useEffect(() => {
+    const alreadyShown = sessionStorage.getItem('irtadihi-popup-shown');
+    if (!alreadyShown && !state.user) {
+      const timer = setTimeout(() => {
+        const userSaved = localStorage.getItem('irtadihi-user');
+        if (!userSaved) {
+          openAuthModal();
+          sessionStorage.setItem('irtadihi-popup-shown', 'true');
+        }
+      }, 20000); // exactly 20 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [openAuthModal, state.user]);
 
   const handleExploreCollection = (cat?: ProductCategory) => {
     if (cat) {
@@ -67,6 +86,10 @@ function AtelierFlagship() {
 
       {/* Slide-Over Shopping Bag Drawer */}
       <BagDrawer />
+
+      {/* 10% On Login Sticky Left Tab & Modal */}
+      <SideStickyDiscount />
+      <AuthModal />
 
       {/* Luxury Toast Notification */}
       <Toast />

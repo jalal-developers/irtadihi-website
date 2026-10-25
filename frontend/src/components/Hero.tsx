@@ -3,10 +3,11 @@
 import React from 'react';
 import { useStore } from '@/lib/store';
 import type { ProductCategory } from '@/lib/data';
+import { ScrollReveal } from '@/components/ScrollReveal';
 
 interface HeroProps {
   onExploreCollection: (cat?: ProductCategory) => void;
-  onExploreHeritage: () => void;
+  onExploreHeritage?: () => void;
 }
 
 export function Hero({ onExploreCollection, onExploreHeritage }: HeroProps) {
@@ -21,7 +22,7 @@ export function Hero({ onExploreCollection, onExploreHeritage }: HeroProps) {
   return (
     <section id="hero" className="hero-section" aria-label="Autumn Winter Atelier 2026">
       {/* Left Column: Editorial Narrative & CTAs */}
-      <div className="hero-copy-col">
+      <ScrollReveal direction="left" duration={850} className="hero-copy-col">
         <div className="flex flex-col gap-2">
           <span className="eyebrow">Autumn / Winter Atelier — 2026</span>
           {/* Prominent, Majestic Arabic Calligraphy Display */}
@@ -51,7 +52,7 @@ export function Hero({ onExploreCollection, onExploreHeritage }: HeroProps) {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => onExploreCollection('All Pieces')}
+            onClick={() => onExploreCollection('All')}
           >
             <span>Explore Collection</span>
             <svg
@@ -65,14 +66,6 @@ export function Hero({ onExploreCollection, onExploreHeritage }: HeroProps) {
             >
               <path d="M3 8h10M9 4l4 4-4 4" />
             </svg>
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={onExploreHeritage}
-          >
-            <span>The Meaning of Irtadihi</span>
           </button>
         </div>
 
@@ -100,10 +93,10 @@ export function Hero({ onExploreCollection, onExploreHeritage }: HeroProps) {
             </span>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Right Column: Asymmetric Two-Frame Visual Showcase */}
-      <div className="hero-visual-col" aria-hidden="true">
+      <ScrollReveal direction="right" duration={850} delay={150} className="hero-visual-col" aria-hidden="true">
         {/* Primary Frame: Flagship Hoodie Silhouette */}
         <div className="hero-main-frame">
           <svg
@@ -175,7 +168,7 @@ export function Hero({ onExploreCollection, onExploreHeritage }: HeroProps) {
           </svg>
           <div className="hero-frame-caption">
             <span className="look-num">Look 01</span>
-            <span>Umber Heavyweight Hoodie — $285</span>
+            <span>Umber Heavyweight Hoodie — PKR 28,500</span>
           </div>
         </div>
 
@@ -237,7 +230,7 @@ export function Hero({ onExploreCollection, onExploreHeritage }: HeroProps) {
             <span>Organic Fleece Weave</span>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

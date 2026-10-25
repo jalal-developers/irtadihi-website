@@ -74,7 +74,7 @@ export function MobileNav({ onSelectCategory }: MobileNavProps) {
               <a
                 href="#collection"
                 className="mobile-nav-link"
-                onClick={(e) => handleNavClick(e, 'collection', 'All Pieces')}
+                onClick={(e) => handleNavClick(e, 'collection', 'All')}
               >
                 <span>Collections</span>
                 <span className="mobile-nav-sub">AW 2026</span>

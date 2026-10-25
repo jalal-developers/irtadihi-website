@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useStore } from '@/lib/store';
 import { MainLogo } from '@/components/MainLogo';
+import { ScrollReveal } from '@/components/ScrollReveal';
 
 export function Footer() {
   const { state, showToast } = useStore();
@@ -28,17 +29,17 @@ export function Footer() {
     <footer className="site-footer" role="contentinfo">
       <div className="footer-grid">
         {/* Col 1: 5fr - Brand Heritage & Philosophy */}
-        <div className="footer-brand-col">
+        <ScrollReveal direction="left" duration={700} className="footer-brand-col">
           <div className="mb-4 inline-block">
             <MainLogo size="sm" variant="alabaster" />
           </div>
           <p className="footer-tagline">
             Classic minimalist tailoring crafted in Warm Alabaster, Deep Umber Charcoal, and Antique Bronze Gold.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Col 2: 2fr - Atelier */}
-        <div>
+        <ScrollReveal direction="bottom" duration={700} delay={100}>
           <h4 className="footer-col-title">Atelier</h4>
           <ul className="footer-links">
             <li>
@@ -62,10 +63,10 @@ export function Footer() {
               </button>
             </li>
           </ul>
-        </div>
+        </ScrollReveal>
 
         {/* Col 3: 2fr - Client Care */}
-        <div>
+        <ScrollReveal direction="bottom" duration={700} delay={200}>
           <h4 className="footer-col-title">Client Care</h4>
           <ul className="footer-links">
             <li>
@@ -89,10 +90,10 @@ export function Footer() {
               </a>
             </li>
           </ul>
-        </div>
+        </ScrollReveal>
 
         {/* Col 4: 3fr - Private Dispatch */}
-        <div>
+        <ScrollReveal direction="right" duration={700} delay={300}>
           <h4 className="footer-col-title">Private Dispatch</h4>
           <p style={{ fontSize: '0.8125rem', color: 'rgba(251, 250, 246, 0.75)', marginBottom: '16px', lineHeight: 1.6 }}>
             Receive invitations to private trunk shows and seasonal capsule releases.
@@ -116,7 +117,7 @@ export function Footer() {
               </button>
             </div>
           </form>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* Bottom Section: Copyright & Palette Tokens */}
