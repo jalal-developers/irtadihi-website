@@ -6,6 +6,7 @@ import type { ProductCategory } from '@/lib/data';
 import { Header } from '@/components/Header';
 import { MobileNav } from '@/components/MobileNav';
 import { Hero } from '@/components/Hero';
+import { EditorialMediaGrid } from '@/components/EditorialMediaGrid';
 import { ProductCatalog } from '@/components/ProductCatalog';
 import { BrandHeritage } from '@/components/BrandHeritage';
 import { Footer } from '@/components/Footer';
@@ -67,6 +68,9 @@ function AtelierFlagship() {
           onExploreCollection={handleExploreCollection}
           onExploreHeritage={handleExploreHeritage}
         />
+
+        {/* Asymmetric 4-Tile Editorial Media & Motion Grid */}
+        <EditorialMediaGrid />
 
         {/* Product Catalog with Hoodies/Sweatshirts & Coming Soon Waitlist */}
         <ProductCatalog

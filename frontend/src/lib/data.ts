@@ -215,3 +215,68 @@ export const COMING_SOON_COPY: Record<string, { heading: string; body: string }>
       'Precisely cut trousers, structured blazers, and tailored shirting — our most complex pieces. Construction is entirely hand-finished. Expected to launch in limited quantities by Spring Atelier season.',
   },
 };
+
+// ===== Editorial Media Grid Data =====
+
+export interface EditorialGridItem {
+  id: string;
+  slot: 'tall-left' | 'top-middle' | 'top-right' | 'bottom-wide';
+  mediaType: 'image' | 'video';
+  src: string; // Path in /editorial/... (e.g. /editorial/look-01.mp4 or .jpg)
+  poster?: string; // Fallback poster image for video tiles
+  alt: string;
+  eyebrow: string; // e.g. "LOOK 01 — MOTION", "TOP PIECE", "ATELIER DRAPE"
+  title: string; // e.g. "Umber Heavyweight Hoodie"
+  subtitleOrPrice?: string; // e.g. "PKR 28,500" or "380gsm Organic Fleece"
+  productId?: string; // Optional: if linked to a product in data.ts, clicking opens PDPModal
+}
+
+export const EDITORIAL_ITEMS: EditorialGridItem[] = [
+  {
+    id: 'editorial-01',
+    slot: 'tall-left',
+    mediaType: 'video',
+    src: '/editorial/model-hero.mp4',
+    poster: '/editorial/model-hero-poster.jpg',
+    alt: 'Atelier Runway Model in Umber Heavyweight Hoodie Silhouette',
+    eyebrow: 'LOOK 01 — MOTION',
+    title: 'Umber Heavyweight Hoodie',
+    subtitleOrPrice: 'PKR 28,500',
+    productId: 'hoodie-001',
+  },
+  {
+    id: 'editorial-02',
+    slot: 'top-middle',
+    mediaType: 'image',
+    src: '/editorial/product-hoodie.jpg',
+    alt: 'Macro Fabric Detail of 380gsm GOTS Organic Fleece',
+    eyebrow: 'ATELIER DRAPE',
+    title: '380gsm Brushed Fleece',
+    subtitleOrPrice: 'GOTS Certified',
+    productId: 'hoodie-002',
+  },
+  {
+    id: 'editorial-03',
+    slot: 'top-right',
+    mediaType: 'video',
+    src: '/editorial/model-motion.mp4',
+    poster: '/editorial/model-motion-poster.jpg',
+    alt: 'Model Motion Silhouette and Profile Movement Study',
+    eyebrow: 'SILHOUETTE STUDY',
+    title: 'Alabaster Draped Cut',
+    subtitleOrPrice: 'PKR 28,500',
+    productId: 'hoodie-002',
+  },
+  {
+    id: 'editorial-04',
+    slot: 'bottom-wide',
+    mediaType: 'image',
+    src: '/editorial/campaign-wide.jpg',
+    alt: 'Autumn / Winter 2026 Wide Atelier Lookbook Campaign',
+    eyebrow: 'VISUAL ESSAY',
+    title: 'Silence in Form, Warmth in Thread',
+    subtitleOrPrice: 'Autumn / Winter 2026 Archive',
+    productId: 'sweatshirt-001',
+  },
+];
+
